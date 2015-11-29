@@ -390,9 +390,6 @@ X.prototype.close = function () {
 };
 
 X.prototype.send = function (url, data) {
-    if (this.sendBeaconSupported() && useSendBeacon)
-        navigator.sendBeacon(url, data);
-    else {
         $.ajax({
             type: 'POST',
             contentType: "text/plain",
@@ -403,28 +400,8 @@ X.prototype.send = function (url, data) {
             processData: false,
             data: data
         });
-    }
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
