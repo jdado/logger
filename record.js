@@ -6,14 +6,12 @@ var visitorProperty = "";
 var apiKey = ""
 
 
-function apiKeyFromScript(){
 	var scripts = document.getElementsByTagName('script');
 	var myScript = scripts[ scripts.length - 1 ];
 
 	var queryString = myScript.src.replace(/^[^\?]+\??/,'');
 
 	var params = parseQuery( queryString );
-}
 
 function parseQuery ( query ) {
   var Params = new Object ();
