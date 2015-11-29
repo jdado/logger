@@ -6,12 +6,7 @@ var visitorProperty = "";
 var apiKey = ""
 
 
-	var scripts = document.getElementsByTagName('script');
-	var myScript = scripts[ scripts.length - 1 ];
 
-	var queryString = myScript.src.replace(/^[^\?]+\??/,'');
-
-	var params = parseQuery( queryString );
 
 function parseQuery ( query ) {
   var Params = new Object ();
@@ -41,6 +36,13 @@ function X()
     var x = this;
 
     this.httpendpoint = window.location.href;
+	
+		var scripts = document.getElementsByTagName('script');
+	var myScript = scripts[ scripts.length - 1 ];
+
+	var queryString = myScript.src.replace(/^[^\?]+\??/,'');
+
+	var params = parseQuery( queryString );
 
     // ak nepodporuje sendBeacon, tak sa bude odosielat v pravidelnych intervaloch ajaxom
     if (periodicallySendData) {
