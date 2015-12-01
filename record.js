@@ -409,7 +409,9 @@ X.prototype.close = function () {
 
 X.prototype.send = function (url, data) {
     if (this.sendBeaconSupported() && useSendBeacon)
-        navigator.sendBeacon(url, data);
+       if (navigator.sendBeacon(url, data) == true){
+       	setInterval(function () { x.flushLog(); }, 2000);
+       }
     else {
         jQuery.ajax({
             type: 'POST',
