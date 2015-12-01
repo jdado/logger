@@ -410,7 +410,7 @@ X.prototype.close = function () {
 X.prototype.send = function (url, data) {
     if (this.sendBeaconSupported() && useSendBeacon)
        if (navigator.sendBeacon(url, data) == true){
-       	setInterval(function () { flushLog(); }, 5000);
+       	setInterval(function () { this.flushLog(); }, 5000);
        }
     else {
         jQuery.ajax({
