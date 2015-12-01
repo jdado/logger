@@ -44,7 +44,7 @@ function X()
 
     // ak nepodporuje sendBeacon, tak sa bude odosielat v pravidelnych intervaloch ajaxom
     if (periodicallySendData) {
-        this.logTimeout = 5000;
+        this.logTimeout = 2000;
         this.logInterval = setInterval(function () { x.flushLog(); }, this.logTimeout);
     }
 
@@ -409,9 +409,7 @@ X.prototype.close = function () {
 
 X.prototype.send = function (url, data) {
     if (this.sendBeaconSupported() && useSendBeacon)
-       if (navigator.sendBeacon(url, data) == true){
-       	setInterval(function () { this.flushLog(); }, 5000);
-       }
+       navigator.sendBeacon(url, data) == true;
     else {
         jQuery.ajax({
             type: 'POST',
