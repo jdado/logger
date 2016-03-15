@@ -64,6 +64,7 @@ function X()
 X.prototype.eventScrollReceived = function (ev) {
     var old = this.scrollYOld || 0;
     var eventName = (window.scrollY - old < 0) ? "scrollup" : "scrolldown";
+
     this.sendLog(new Date().getTime(), eventName, window.scrollX, window.scrollY);
     this.scrollYOld = window.scrollY;
 }
@@ -72,28 +73,48 @@ X.prototype.eventMouseReceived = function (ev) {
     this.lastMouseX = ev.screenX;
     this.lastMouseY = ev.screenY;
 
+    var coordinates = transferCoordinatesForHeatMap(ev);
+
     if (ev.target != null)
-        this.sendLog(new Date().getTime(), ev.type, this.lastMouseX, this.lastMouseY, ev.target.localName);
+        this.sendLog(new Date().getTime(), ev.type, this.lastMouseX, this.lastMouseY, coordinates[0], coordinates[1], ev.target.localName );
     else
-        this.sendLog(new Date().getTime(), ev.type, this.lastMouseX, this.lastMouseY);
+        this.sendLog(new Date().getTime(), ev.type, this.lastMouseX, this.lastMouseY, coordinates[0],coordinates[1]);
+}
+
+function transferCoordinatesForHeatMap(ev){
+    var realMouseX = ev.clientX + window.scrollX;
+    var realMouseY = ev.clientY + window.scrollY;
+
+    var array = [];
+    //1024px je maxim=alna sirka heatmap screenu, ktoru sme vopred dohodli
+
+    this.heatMapMouseX = Math.round((1024 / $(window).width()) * realMouseX);
+
+
+    this.heatMapMouseY = realMouseY;
+
+    array.push(this.heatMapMouseX);
+    array.push(this.heatMapMouseY);
+
+    return array;
 }
 
 X.prototype.eventTouchReceived = function (event) {
-    event.preventDefault();
-    var touches = event.originalEvent.touches;
-    var ev = event.originalEvent;
-    for (var i=0; i < touches.length; i++) {
-        var touch = touches[i];
-        this.lastTouchX = touch.screenX;
-        this.lastTouchY = touch.screenY;
-        if (ev.target != null)
-            this.sendLog(new Date().getTime(), ev.type, touches.length, touch.identifier, Math.round(touch.clientX * 100)/100, Math.round(touch.clientY * 100)/100, Math.round(touch.screenX * 100)/100, Math.round(touch.screenY * 100)/100, Math.round(touch.radiusX * 100)/100, Math.round(touch.radiusY * 100)/100, Math.round(touch.rotationAngle * 100)/100, Math.round(touch.force * 100)/100, ev.target.localName);
-        else
-            this.sendLog(new Date().getTime(), ev.type, touches.length, touch.identifier, Math.round(touch.clientX * 100)/100, Math.round(touch.clientY * 100)/100, Math.round(touch.screenX * 100)/100, Math.round(touch.screenY * 100)/100, Math.round(touch.radiusX * 100)/100, Math.round(touch.radiusY * 100)/100, Math.round(touch.rotationAngle * 100)/100, Math.round(touch.force * 100)/100);
-    }
-    if (touches.length == 0) {
-        this.sendLog(new Date().getTime(), ev.type, touches.length);
-    }
+    //event.preventDefault();
+    //var touches = event.originalEvent.touches;
+    //var ev = event.originalEvent;
+    //for (var i=0; i < touches.length; i++) {
+    //    var touch = touches[i];
+    //    this.lastTouchX = touch.screenX;
+    //    this.lastTouchY = touch.screenY;
+    //    if (ev.target != null)
+    //        this.sendLog(new Date().getTime(), ev.type, touches.length, touch.identifier, Math.round(touch.clientX * 100)/100, Math.round(touch.clientY * 100)/100, Math.round(touch.screenX * 100)/100, Math.round(touch.screenY * 100)/100, Math.round(touch.radiusX * 100)/100, Math.round(touch.radiusY * 100)/100, Math.round(touch.rotationAngle * 100)/100, Math.round(touch.force * 100)/100, ev.target.localName);
+    //    else
+    //        this.sendLog(new Date().getTime(), ev.type, touches.length, touch.identifier, Math.round(touch.clientX * 100)/100, Math.round(touch.clientY * 100)/100, Math.round(touch.screenX * 100)/100, Math.round(touch.screenY * 100)/100, Math.round(touch.radiusX * 100)/100, Math.round(touch.radiusY * 100)/100, Math.round(touch.rotationAngle * 100)/100, Math.round(touch.force * 100)/100);
+    //}
+    //if (touches.length == 0) {
+    //    this.sendLog(new Date().getTime(), ev.type, touches.length);
+    //}
 }
 
 //verzie OS, web browsera,...
@@ -219,20 +240,16 @@ document.write(''
 X.prototype.eventReceived = function (ev) {
     if (this.logTimeout <= -1)
         return;
-    /*
-     if (this.logEventCount == 0) {
-     var time = new Date();
-     this.sendLog(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height());
-     this.sendLog(new Date().getTime(), 'colordepth', screen.colorDepth);
-     this.sendLog(new Date().getTime(), 'timezone', time.getTimezoneOffset());
-     }
-     */
+
     if (this.logEventCount == 0) {
         var time = new Date();
         visitorProperty = visitorProperties(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height(), screen.colorDepth, time.getTimezoneOffset(), browserName, fullVersion, majorVersion, navigator.appName, cookie, language, platform, comesFrom, bot);;
     }
+
+    var coordinates = transferCoordinatesForHeatMap(ev);
     if (ev.type == 'click') {
-        this.sendLog(new Date().getTime(), ev.type, ev.clientX, ev.clientY, ev.target.localName);
+        var coordinates = transferCoordinatesForHeatMap(ev);
+        this.sendLog(new Date().getTime(), ev.type, ev.clientX, ev.clientY, coordinates[0], coordinates[1], ev.target.localName);
         return;
     }
 
@@ -295,9 +312,16 @@ X.prototype.eventReceived = function (ev) {
 
 function createJson  (args,event){
     var targetName = "";
+    var heatMapX = "";
+    var heatMapY = "";
+
+    if (args.length > 6){
+        targetName = args[6];
+    }
 
     if (args.length > 4){
-        targetName = args[4];
+        heatMapX = args[4];
+        heatMapY = args[5];
     }
 
     var data = {
@@ -305,7 +329,9 @@ function createJson  (args,event){
         "eventtype" : args[1],
         "corx": args[2],
         "cory" : args[3],
-        "targetName" : targetName,
+        "heatMapX": heatMapX,
+        "heatMapY": heatMapY,
+        "targetName" : targetName
     };
 
     return JSON.stringify(data);
@@ -334,9 +360,6 @@ function visitorProperties() {
         "bot" : "",
 		"api_key" : ""
 
-		
-        
-
     };
 
     // now we dont need eventype (without arguments[1])
@@ -359,24 +382,23 @@ function visitorProperties() {
     data.language = arguments[15];
     data.platform = arguments[16];
     data.comes_from = arguments[17];
-    data.bot = arguments[18];
+    data.bot = arguments[19];
 
     data.api_key = document.getElementById("logger").getAttribute("api_key");
 
     return JSON.stringify(data);
 }
 
-
-
-
 X.prototype.argsToMsgText = function (args) {
     var text = "";
     var event = "";
+    var coordinates = transferCoordinatesForHeatMap(event);
+
     if (args.length > 1){
         event = args[1];
     }
 
-    for (var i = 0; i < args.length; i++)
+    for (var i = 0; i < args.length - 1; i++)
         text = text.concat(args[i],";");
     return createJson(args,event);
 }
@@ -411,7 +433,7 @@ X.prototype.flushLog = function () {
     //creating json header
     var jsonHeader = '{"visitor":{"mid":' + '"'+this.machineId+'"' + ',' +
         '"sid":' + '"'+ this.sessionId +'"' + ',' +
-        '"page":' + '"' + document.location.pathname + '"},' +
+        '"page":' + '"' + document.URL + '"},' +
         '"size":' + visitorProperty + ',' +
         '"data": [';
 
