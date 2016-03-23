@@ -256,7 +256,7 @@ X.prototype.eventReceived = function (ev) {
 
     if (this.logEventCount == 0) {
         var time = new Date();
-        visitorProperty = visitorProperties(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height(), screen.colorDepth, time.getTimezoneOffset(), browserName, fullVersion, majorVersion, navigator.appName, cookie, language, platform, comesFrom, bot);
+        visitorProperty = visitorProperties(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height(), screen.colorDepth, time.getTimezoneOffset(), browserName, fullVersion, majorVersion, navigator.appName, cookie, language, platform, comesFrom, bot, device);
     }
 
     var coordinates = transferCoordinatesForHeatMap(ev);
@@ -396,8 +396,8 @@ function visitorProperties() {
     data.language = arguments[15];
     data.platform = arguments[16];
     data.comes_from = arguments[17];
-    data.bot = arguments[19];
-    data.device = device;
+    data.bot = arguments[18];
+    data.device = arguments[19];
 
     data.api_key = document.getElementById("logger").getAttribute("api_key");
 
