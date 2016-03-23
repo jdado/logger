@@ -117,7 +117,12 @@ X.prototype.eventTouchReceived = function (event) {
     //}
 }
 
-//verzie OS, web browsera,...
+//verzie OS, web browsera, typ zariadenia...
+const PHONE = "Mobile";
+const TABLET = "Tablet";
+const DESKTOP = "Desktop";
+const DEVICES = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+
 var nVer = navigator.appVersion;
 var nAgt = navigator.userAgent;
 var browserName  = navigator.appName;
@@ -128,6 +133,14 @@ var nameOffset,verOffset,ix;
 var cookie = navigator.cookieEnabled;
 var language = navigator.language;
 var platform = navigator.platform;
+var device;
+
+if( DEVICES.test(nAgt) ) {
+    device = PHONE;
+} else {
+    device = DESKTOP;
+}
+
 
 //URL na referujucu stranku, odkial prisli
 var comesFrom = document.referrer;
@@ -243,7 +256,7 @@ X.prototype.eventReceived = function (ev) {
 
     if (this.logEventCount == 0) {
         var time = new Date();
-        visitorProperty = visitorProperties(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height(), screen.colorDepth, time.getTimezoneOffset(), browserName, fullVersion, majorVersion, navigator.appName, cookie, language, platform, comesFrom, bot);;
+        visitorProperty = visitorProperties(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height(), screen.colorDepth, time.getTimezoneOffset(), browserName, fullVersion, majorVersion, navigator.appName, cookie, language, platform, comesFrom, bot);
     }
 
     var coordinates = transferCoordinatesForHeatMap(ev);
@@ -358,6 +371,7 @@ function visitorProperties() {
         "platform" : "",
 		"comes_from" : "",
         "bot" : "",
+        "device"  : "",
 		"api_key" : ""
 
     };
@@ -383,6 +397,7 @@ function visitorProperties() {
     data.platform = arguments[16];
     data.comes_from = arguments[17];
     data.bot = arguments[19];
+    data.device = device;
 
     data.api_key = document.getElementById("logger").getAttribute("api_key");
 
