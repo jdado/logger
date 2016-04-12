@@ -115,7 +115,7 @@ X.prototype.eventTouchReceived = function (event) {
     //if (touches.length == 0) {
     //    this.sendLog(new Date().getTime(), ev.type, touches.length);
     //}
-}
+    }
 
 //verzie OS, web browsera, typ zariadenia...
 const PHONE = "Mobile";
@@ -126,7 +126,7 @@ const DEVICES = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
 var nVer = navigator.appVersion;
 var nAgt = navigator.userAgent;
 var browserName  = navigator.appName;
-var fullVersion  = ''+parseFloat(navigator.appVersion); 
+var fullVersion  = ''+parseFloat(navigator.appVersion);
 var majorVersion = parseInt(navigator.appVersion,10);
 var nameOffset,verOffset,ix;
 
@@ -149,65 +149,65 @@ var bot = 0;
 
 // In Opera 15+, the true version is after "OPR/" 
 if ((verOffset=nAgt.indexOf("OPR/"))!=-1) {
- browserName = "Opera";
- fullVersion = nAgt.substring(verOffset+4);
+    browserName = "Opera";
+    fullVersion = nAgt.substring(verOffset+4);
 }
 // In older Opera, the true version is after "Opera" or after "Version"
 else if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
- browserName = "Opera";
- fullVersion = nAgt.substring(verOffset+6);
- if ((verOffset=nAgt.indexOf("Version"))!=-1) 
-   fullVersion = nAgt.substring(verOffset+8);
+    browserName = "Opera";
+    fullVersion = nAgt.substring(verOffset+6);
+    if ((verOffset=nAgt.indexOf("Version"))!=-1)
+        fullVersion = nAgt.substring(verOffset+8);
 }
 // In MSIE, the true version is after "MSIE" in userAgent
 else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
- browserName = "Microsoft Internet Explorer";
- fullVersion = nAgt.substring(verOffset+5);
+    browserName = "Microsoft Internet Explorer";
+    fullVersion = nAgt.substring(verOffset+5);
 }
 // In Chrome, the true version is after "Chrome" 
 else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
- browserName = "Chrome";
- fullVersion = nAgt.substring(verOffset+7);
+    browserName = "Chrome";
+    fullVersion = nAgt.substring(verOffset+7);
 }
 // In Safari, the true version is after "Safari" or after "Version" 
 else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
- browserName = "Safari";
- fullVersion = nAgt.substring(verOffset+7);
- if ((verOffset=nAgt.indexOf("Version"))!=-1) 
-   fullVersion = nAgt.substring(verOffset+8);
+    browserName = "Safari";
+    fullVersion = nAgt.substring(verOffset+7);
+    if ((verOffset=nAgt.indexOf("Version"))!=-1)
+        fullVersion = nAgt.substring(verOffset+8);
 }
 // In Firefox, the true version is after "Firefox" 
 else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
- browserName = "Firefox";
- fullVersion = nAgt.substring(verOffset+8);
+    browserName = "Firefox";
+    fullVersion = nAgt.substring(verOffset+8);
 }
 // In most other browsers, "name/version" is at the end of userAgent 
-else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
-          (verOffset=nAgt.lastIndexOf('/')) ) 
+else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
+    (verOffset=nAgt.lastIndexOf('/')) )
 {
- browserName = nAgt.substring(nameOffset,verOffset);
- fullVersion = nAgt.substring(verOffset+1);
- if (browserName.toLowerCase()==browserName.toUpperCase()) {
-  browserName = navigator.appName;
- }
+    browserName = nAgt.substring(nameOffset,verOffset);
+    fullVersion = nAgt.substring(verOffset+1);
+    if (browserName.toLowerCase()==browserName.toUpperCase()) {
+        browserName = navigator.appName;
+    }
 }
 // trim the fullVersion string at semicolon/space if present
 if ((ix=fullVersion.indexOf(";"))!=-1)
-   fullVersion=fullVersion.substring(0,ix);
+    fullVersion=fullVersion.substring(0,ix);
 if ((ix=fullVersion.indexOf(" "))!=-1)
-   fullVersion=fullVersion.substring(0,ix);
+    fullVersion=fullVersion.substring(0,ix);
 
 majorVersion = parseInt(''+fullVersion,10);
 if (isNaN(majorVersion)) {
- fullVersion  = ''+parseFloat(navigator.appVersion); 
- majorVersion = parseInt(navigator.appVersion,10);
+    fullVersion  = ''+parseFloat(navigator.appVersion);
+    majorVersion = parseInt(navigator.appVersion,10);
 }
 
 //overenie ci je bot alebo crawler
 //document.write(nAgt);
 
 if(nAgt==("Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)") || nAgt==("Feedly/1.0 (+http://www.feedly.com/fetcher.html; like FeedFetcher-Google)") || nAgt==("downnotifier.com monitoring") || nAgt==("Irokez.cz monitoring v1.2 - (http://www.irokez.cz, Irokez.cz, crawl)") || nAgt==("Feedly/1.0 (+http://www.feedly.com/fetcher.html; like FeedFetcher-Google)") || nAgt==("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11 GotSiteMonitor.com") || nAgt==("Inspingbot/1.0 (+https://www.insping.com/)") || nAgt==("Server Density Service Monitoring v2") || nAgt==("Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)") || nAgt==("PINGOMETER_BOT_(HTTPS://PINGOMETER.COM)") || nAgt==("ServiceUptime.robot") || nAgt==("Mozilla/5.0 (compatible; MJ12bot/v1.4.5; http://www.majestic12.co.uk/bot.php?+)") || nAgt==("Mozilla/5.0+(compatible; UptimeRobot/2.0; http://www.uptimerobot.com/)") || nAgt==("Mozilla/5.0 (compatible; DotBot/1.1; http://www.opensiteexplorer.org/dotbot, help@moz.com)") || nAgt==("Mozilla/5.0+(compatible; Monitority/1.0; http://www.monitority.com/)") || nAgt==("omgilibot/0.4 +http://omgili.com") || nAgt==("Mozilla/5.0 (compatible; FlipboardRSS/1.1; +http://flipboard.com/browserproxy)") || nAgt==("FreeWebMonitoring SiteChecker/0.2 (+http://www.freewebmonitoring.com/bot.html)") || nAgt==("Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)") || nAgt==("Mozilla/5.0 (compatible; www.monitor.us - free monitoring service; http://www.monitor.us)") || nAgt==("CCBot/2.0 (http://commoncrawl.org/faq/)") || nAgt==("Mozilla/5.0 (compatible; PaperLiBot/2.1; http://support.paper.li/entries/20023257-what-is-paper-li)") || nAgt==("Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/)") || nAgt==("Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)") || nAgt==("Pingoscope") || nAgt==("Mozilla/5.0 (compatible; linkdexbot/2.0; +http://www.linkdex.com/bots/)") || nAgt==("Mozilla/5.0 (compatible; Exabot/3.0; +http://www.exabot.com/go/robot)") || nAgt==("Site24x7") || nAgt==("montastic-monitor http://www.montastic.com") || nAgt==("Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)") || nAgt==("rogerbot/1.0 (http://www.moz.com/dp/rogerbot, rogerbot-crawler@moz.com)") || nAgt==("Mozilla/5.0 (compatible; DeuSu/5.0.2; +https://deusu.de/robot.html)") || nAgt==("Mozilla/5.0 (compatible; coccoc/1.0; +http://help.coccoc.com/)") || nAgt==("Mozilla/5.0 (compatible; MetaJobBot; http://www.metajob.at/crawler)") || nAgt==("Riddler (http://riddler.io/about)") || nAgt==("Mozilla/5.0 (compatible; Feedspotbot/1.0; +http://www.feedspot.com/fs/bot)") || nAgt==("Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)") || nAgt==("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)") || nAgt==("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; http://www.changedetection.com/bot.html )") || nAgt==("panscient.com") || nAgt==("TurnitinBot (https://turnitin.com/robot/crawlerinfo.html)") || nAgt==("Mozilla/5.0 (compatible; theoldreader.com)") || nAgt==("Woko robot 3.0") || nAgt==("Mozilla/5.0 (compatible; Genieo/1.0 http://www.genieo.com/webfilter.html)") || nAgt==("BacklinkCrawler (http://www.backlinktest.com/crawler.html)") || nAgt==("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0); 360Spider(compatible; HaosouSpider; http://www.haosou.com/help/help_3_2.html)") || nAgt==("Mozilla/5.0 (compatible; GroupHigh/1.0; +http://www.grouphigh.com/)") || nAgt==("Mozilla/5.0 (compatible; spbot/4.4.2; +http://OpenLinkProfiler.org/bot )") || nAgt==("mindUpBot (datenbutler.de)") || nAgt==("Mozilla/5.0 (compatible; Qwantify/2.1w; +https://www.qwant.com/)/") || nAgt==("Mozilla/5.0 (compatible; SeznamBot/3.2-test4; +http://fulltext.sblog.cz/)") || nAgt==("Mozilla/5.0 (compatible; Lipperhey-Kaus-Australis/5.0; +https://www.lipperhey.com/en/about/)") || nAgt==("404 Checker [http://www.404checker.com/user-agent]") || nAgt==("Mozilla/5.0 (compatible; UASlinkChecker/2.1; +https://udger.com/support/UASlinkChecker)") || nAgt==("LinqiaScrapeBot/1.0 (eng@linqia.com)") || nAgt==("Mozilla/5.0 (compatible; SEOlyticsCrawler/3.0; +http://crawler.seolytics.net/)") || nAgt==("Testomatobot/1.0 (Linux x86_64; +http://www.testomato.com/testomatobot) minicrawler/3.0.1") || nAgt==("Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/98 Safari/537.4 (StatusCake)") || nAgt==("Mozilla/5.0 (compatible; WBSearchBot/1.1; +http://www.warebay.com/bot.html)") || nAgt==("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6 - James BOT - WebCrawler http://cognitiveseo.com/bot.html") || nAgt==("Mozilla/5.0 (compatible; proximic; +http://www.proximic.com/info/spider.php)") || nAgt==("MXT/Nutch-1.10 (http://t.co/GSRLLKex24; informatique at mixdata dot com)") || nAgt==("Mozilla/5.0 (compatible; Linux x86_64; Mail.RU_Bot/2.0; +http://go.mail.ru/help/robots)") || nAgt==("Mozilla/5.0 (compatible; TWMBot/0.1; +http://thewebminer.com)") || nAgt==("Googlebot (gocrawl v0.4)") || nAgt==("Mozilla/5.0 (compatible; MojeekBot/0.6; +https://www.mojeek.com/bot.html)") || nAgt==("Mozilla/5.0 (Windows NT 6.1) (compatible; SMTBot/1.0; +http://www.similartech.com/smtbot)") || nAgt==("Mergadobot/3.0.2 (+http://mergado.cz)")){
-	bot=1;
+    bot=1;
 }
 if(nAgt==("aboutthedomain") || nAgt==("Mozilla/5.0 (compatible; archive.org_bot; Wayback Machine Live Record; +http://archive.org/details/archive.org_bot)") || nAgt==("Online Virus Scanner: http://tools.geek-tools.org") || nAgt==("http://tools.geek-tools.org/link-counter/") || nAgt==("Visited by http://tools.geek-tools.org") || nAgt==("Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US) AppEngine-Google; (+http://code.google.com/appengine; appid: s~virustotalcloud)") || nAgt==("bl.uk_lddc_bot/3.3.0-SNAPSHOT-2014-10-07T09:33:31Z (+http://www.bl.uk/aboutus/legaldeposit/websites/websites/faqswebmaster/index.html)") || nAgt==("CSS Certificate Spider (http://www.css-security.com/certificatespider/)") || nAgt==("Mozilla/5.0 (Windows; U; Windows NT 5.1; en; rv:1.9.0.13) Gecko/2009073022 Firefox/3.5.2 (.NET CLR 3.5.30729) SurveyBot/2.3 (DomainTools)") || nAgt==("Mozilla/5.0 (compatible; Yeti/1.1; +http://help.naver.com/robots/)") || nAgt==("yacybot (/global; amd64 Linux 4.3.0-gentoo-ARCH; java 1.7.0_85; Europe/en) http://yacy.net/bot.html") || nAgt==("Mozilla/5.0 (compatible; Steeler/3.5; http://www.tkl.iis.u-tokyo.ac.jp/~crawler/)") || nAgt==("Comodo SSL Checker") || nAgt==("GetintentCrawler getintent.com") || nAgt==("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/600.2.5 (KHTML, like Gecko) Version/8.0.2 Safari/600.2.5 (Applebot/0.1; +http://www.apple.com/go/applebot)") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B410 Safari/600.1.4 (Applebot/0.1; +http://www.apple.com/go/applebot)") || nAgt==("Mozilla/5.0 (compatible; Applebot/0.3; +http://www.apple.com/go/applebot)") || nAgt==("Mozilla/5.0 (compatible; DomainAppender /1.0; +http://www.profound.net/domainappender)") || nAgt==("Mozilla/5.0 (compatible; kulturarw3 +http://www.kb.se/om/projekt/Svenska-webbsidor---Kulturarw3/)") || nAgt==("FeedCatBot/3.0 (+http://www.feedcat.net/)") || nAgt==("GigablastOpenSource/1.0") || nAgt==("Mozilla/5.0 (compatible; online-webceo-bot/1.0; +http://online.webceo.com)") || nAgt==("Mozilla/5.0 (compatible; GrapeshotCrawler/2.0; +http://www.grapeshot.co.uk/crawler.php)") || nAgt==("voltron") || nAgt==("Jyxobot/1") || nAgt==("Mozilla/5.0 (compatible; PrivacyAwareBot/1.1; +http://www.privacyaware.org)") || nAgt==("SimplyFast.info Headers") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12F70 Safari/600.1.4 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)") || nAgt==("Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.7; Google-SearchByImage) Gecko/2009021910 Firefox/3.0.7") || nAgt==("Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.7; Google-SearchByImage) Gecko/2009021910 Firefox/3.0.7") || nAgt==("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko; Google Page Speed Insights) Chrome/27.0.1453 Safari/537.36") || nAgt==("Mozilla/5.0 (compatible; Google-Structured-Data-Testing-Tool +http://developers.google.com/structured-data/testing-tool/)") || nAgt==("Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko; googleweblight) Chrome/38.0.1025.166 Mobile Safari/535.19") || nAgt==("Googlebot/2.1 (+http://www.google.com/bot.html)") || nAgt==("Google favicon") || nAgt==("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko; Google Web Preview) Chrome/27.0.1453 Safari/537.36") || nAgt==("Mozilla/5.0 (en-us) AppleWebKit/537.36 (KHTML, like Gecko; Google PP Default) Chrome/27.0.1453 Safari/537.36") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko; Google Page Speed Insights) Version/8.0 Mobile/12F70 Safari/600.1.4") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Version/8.0 Mobile/12F70 Safari/600.1.4 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Version/8.0 Mobile/12F70 Safari/600.1.4 (compatible; Google Search Console)") || nAgt==("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko; Google Search Console) Chrome/27.0.1453 Safari/537.36") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)") || nAgt==("Mozilla/5.0 (iPhone; CPU iPhone OS 6_0_1 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko; Google Page Speed Insights) Version/6.0 Mobile/10A525 Safari/8536.25") || nAgt==("Googlebot-Image/1.0") || nAgt==("Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20110814 Firefox/6.0 Google favicon") || nAgt==("Mediapartners-Google") || nAgt==("Mozilla/5.0 (compatible; yoozBot-2.2; http://yooz.ir; info@yooz.ir)") || nAgt==("hivaBot/hivaBot-1.0 (Iranian Search Engine bot; http://yooz.ir; info@yooz.ir)") || nAgt==("gosquared-thumbnailer/1.0") || nAgt==("GoSquared-Status-Checker/0.2") || nAgt==("WebCookies/1.0 (+http://webcookies.info/faq/#agent)") || nAgt==("HTTP-Header-Abfrage/1.0 (http://www.internalscripts.de/werkzeuge/http-header-abfrage.php)") || nAgt==("Mozilla/5.0 (compatible; SecretSerachEngineLabs.com-SBSearch/0.9; http://www.secretsearchenginelabs.com/secret-web-crawler.php)") || nAgt==("netEstate NE Crawler (+http://www.website-datenbank.de/)") || nAgt==("RSSMicro.com RSS/Atom Feed Robot") || nAgt==("Mozilla/5.0 (compatible; ScoutJet; +http://www.scoutjet.com/)")){
 	bot=1;
@@ -223,36 +223,36 @@ if(nAgt==("Mozilla/5.0 (WhatsMyIP.org Text_to_Code_Ratio_Tool) http://whatsmyip.
 }
 
 /*
-var txt = '';
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function(){
-  //if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
-    txt = xmlhttp.responseText;
+ var txt = '';
+ var xmlhttp = new XMLHttpRequest();
+ xmlhttp.onreadystatechange = function(){
+ //if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+ txt = xmlhttp.responseText;
  // }
-};
-xmlhttp.open("GET","http://localhost:8000/text.txt",true);
-xmlhttp.send();
+ };
+ xmlhttp.open("GET","http://localhost:8000/text.txt",true);
+ xmlhttp.send();
 
-document.write(''
+ document.write(''
  +'browser  = '+txt+'<br>'
- 
-)
 
-function reqListener () {
-  console.log(this.responseText);
-}
+ )
 
-var oReq = new XMLHttpRequest();
-oReq.onload = reqListener;
-oReq.open("get", "text.txt", true);
-oReq.send();
-document.write(''
+ function reqListener () {
+ console.log(this.responseText);
+ }
+
+ var oReq = new XMLHttpRequest();
+ oReq.onload = reqListener;
+ oReq.open("get", "text.txt", true);
+ oReq.send();
+ document.write(''
  +'browser <br>'
- 
-)
-*/
+
+ )
+ */
 /*
-document.write(''
+ document.write(''
  +'browser  = '+browserName+'<br>'
  //+'info  = '+nVer+'<br>'
  +'browser_version  = '+fullVersion+'<br>'
@@ -261,18 +261,18 @@ document.write(''
  +'cookie = '+cookie+'<br>'
  +'language = '+language+'<br>'
  +'platform = '+platform+'<br>'
-)
-*/
+ )
+ */
 
 
 X.prototype.eventReceived = function (ev) {
     if (this.logTimeout <= -1)
         return;
 
-    if (this.logEventCount == 0) {
-        var time = new Date();
+     if (this.logEventCount == 0) {
+     var time = new Date();
         visitorProperty = visitorProperties(new Date().getTime(), 'size', screen.width, screen.height, $(window).width(), $(window).height(), $(document).width(), $(document).height(), screen.colorDepth, time.getTimezoneOffset(), browserName, fullVersion, majorVersion, navigator.appName, cookie, language, platform, comesFrom, bot, device);
-    }
+     }
 
     var coordinates = transferCoordinatesForHeatMap(ev);
     if (ev.type == 'click') {
@@ -384,10 +384,10 @@ function visitorProperties() {
         "cookie" : "",
         "language" : "",
         "platform" : "",
-		"comes_from" : "",
+        "comes_from" : "",
         "bot" : "",
         "device"  : "",
-		"api_key" : ""
+        "api_key" : ""
 
     };
 
@@ -489,42 +489,60 @@ X.prototype.close = function () {
 };
 
 X.prototype.send = function (url, data) {
-    if (this.sendBeaconSupported() && useSendBeacon)
-        navigator.sendBeacon(url, data);
+    var ga_key = document.getElementById("logger").getAttribute("ga_key")
+    if (ga_key = ""){
+        if (this.sendBeaconSupported() && useSendBeacon)
+            navigator.sendBeacon(url, data);
+        else {
+            $.ajax({
+                type: 'POST',
+                contentType: "text/plain",
+                url: url,
+                async: true,
+                crossDomain: useExternalServerScript,
+                dataType : "text",
+                processData: false,
+                data: data
+            });
+        }
+    }
     else {
-        $.ajax({
-            type: 'POST',
+        // if (this.sendBeaconSupported() && useSendBeacon)
+        //     navigator.sendBeacon(url, data);
+        // else {
+        jQuery.ajax({
+            type: "POST",
             contentType: "text/plain",
             url: url,
             async: true,
-            crossDomain: useExternalServerScript,
-            dataType : "text",
+            // crossDomain: useExternalServerScript,
+            dataType: "text/plain",
             processData: false,
             data: data
+        }).success(function (response) {
+            console.log(response);
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga(function (tracker) {
+                var clientId = tracker.get('clientId');
+            });
+
+            ga('create', ga_key, {'userId': response});
+            ga('send', 'pageview');
         });
+        // }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 X.prototype.sendBeaconSupported = function () {
