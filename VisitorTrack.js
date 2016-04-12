@@ -490,7 +490,7 @@ X.prototype.close = function () {
 
 X.prototype.send = function (url, data) {
     var ga_key = document.getElementById("logger").getAttribute("ga_key")
-    if (ga_key = ""){
+    if (ga_key == ""){
         if (this.sendBeaconSupported() && useSendBeacon)
             navigator.sendBeacon(url, data);
         else {
